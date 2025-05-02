@@ -11,24 +11,6 @@ from posthog_mcp.tools.projects.projects import get_current_organization, list_p
 mcp = FastMCP("liquidium")
 
 @mcp.tool()
-async def list_liquidium_projects() -> str:
-    """List all available Liquidium projects."""
-    org = await get_current_organization()
-    if "error" in org:
-        return f"Failed to get organization: {org['error']}"
-    
-    projects = await list_projects(org["id"])
-    if "error" in projects:
-        return f"Failed to list projects: {projects['error']}"
-    
-    if not projects:
-        return "No projects found"
-        
-    return f"Available projects ({len(projects)}):\n" + "\n".join(
-        f"ID: {p['id']} - Name: {p['name']}" for p in projects
-    ) 
-
-@mcp.tool()
 async def create_liquidium_annotation(project_id: int, content: str, date_marker: str | None = None) -> str:
     """Create a Liquidium annotation.
     
@@ -50,13 +32,13 @@ Created by: {result['created_by']['email']}
 """ 
 
 @mcp.tool()
-async def list_liquidium_insights(project_id: int, search: str | None = None) -> str:
-    """List all available Liquidium insights for a project.
+async def list_insights(search: str | None = None) -> str:
+    """List all available Liquidium insights for the default project.
     
     Args:
-        project_id: The ID of the project as an integer (e.g. 99423)
         search: Optional search query to filter insights
     """
+    project_id = 101747
     try:
         insights = await get_insights(project_id, search)
         
@@ -74,13 +56,13 @@ async def list_liquidium_insights(project_id: int, search: str | None = None) ->
         return f"Failed to list insights: {str(e)}"
 
 @mcp.tool()
-async def search_liquidium_insights(project_id: int, search: str) -> str:
-    """Search for Liquidium insights by name.
+async def search_insights(search: str) -> str:
+    """Search for Liquidium insights by name in the default project.
     
     Args:
-        project_id: The ID of the project as an integer (e.g. 99423)
         search: The search query to filter insights by name
     """
+    project_id = 101747
     try:
         insights = await get_insights(project_id, search)
         
@@ -98,13 +80,13 @@ async def search_liquidium_insights(project_id: int, search: str) -> str:
         return f"Failed to search insights: {str(e)}"
 
 @mcp.tool()
-async def get_liquidium_insight_details(project_id: int, insight_id: int) -> str:
-    """Get details for a specific Liquidium insight.
+async def insight_details(insight_id: int) -> str:
+    """Get details for a specific Liquidium insight from the default project.
     
     Args:
-        project_id: The ID of the project as an integer (e.g. 99423)
         insight_id: The ID of the insight as an integer (e.g. 12345)
     """
+    project_id = 101747
     try:
         insight_details = await get_insight_details(project_id, insight_id)
         
