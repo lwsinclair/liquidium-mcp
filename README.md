@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/shudufhadzo-liquidium-mcp-badge.png)](https://mseep.ai/app/shudufhadzo-liquidium-mcp)
+
 # Liquidium MCP Server 
 
 A Model Context Protocol (MCP) server for interacting with PostHog analytics through Liquidium. Create annotations and manage projects directly through Claude Desktop or Smithery!
